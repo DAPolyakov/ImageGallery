@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 
 
-abstract class BaseActivity<V : MvpView> : AppCompatActivity(), MvpView {
+abstract class BaseActivity : AppCompatActivity(), MvpView {
 
-    protected abstract val presenter: BasePresenter<V>
+    protected abstract val presenter: BasePresenter<*>
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
