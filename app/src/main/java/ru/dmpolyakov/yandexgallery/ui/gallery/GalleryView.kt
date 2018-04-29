@@ -8,4 +8,6 @@ import java.util.*
 interface GalleryView : MvpView {
     fun swapContent(images: LinkedList<ImageFile>)
     fun addContent(images: LinkedList<ImageFile>)
+    fun showLoading()
+    fun hideLoading()
 }

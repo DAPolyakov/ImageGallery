@@ -3,6 +3,7 @@ package ru.dmpolyakov.yandexgallery.ui.gallery
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import kotlinx.android.synthetic.main.activity_gallery.*
 import ru.dmpolyakov.yandexgallery.R
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
@@ -33,6 +34,14 @@ class GalleryActivity : BaseActivity(), GalleryView {
         })
 
         presenter.attachView(this)
+    }
+
+    override fun showLoading(){
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading(){
+        progressBar.visibility = View.GONE
     }
 
     override fun swapContent(images: LinkedList<ImageFile>) {

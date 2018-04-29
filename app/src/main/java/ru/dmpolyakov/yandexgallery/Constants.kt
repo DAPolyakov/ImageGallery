@@ -5,4 +5,4 @@ const val DEFAULT_CONNECT_TIMEOUT = 30000L
 
 const val PUBLIC_KEY = "https://yadi.sk/d/xJxpxpYD3Urjas"
 const val IMAGE_PREVIEW_SIZE = "L"
-const val IMAGES_LIMIT = 10
+const val IMAGES_LIMIT = 15

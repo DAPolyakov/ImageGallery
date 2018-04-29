@@ -32,10 +32,9 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
         }
     }
 
-
     private fun loadFolder(offset: Int) {
         if (!isLoading) {
-            isLoading = true
+            setLoadingState(true)
             imageRepository.getFolder(offset)
                     .observeOn(Schedulers.computation())
                     .subscribe({ folder, t ->
@@ -44,6 +43,15 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
                             loadImagesFromFolder(Observable.just(it.items), offset)
                         }
                     })
+        }
+    }
+
+    private fun setLoadingState(loading: Boolean) {
+        isLoading = loading
+        if (loading) {
+            getView()?.showLoading()
+        } else {
+            getView()?.hideLoading()
         }
     }
 
@@ -63,7 +71,7 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
                 .subscribe({ images, t ->
                     images.lastOrNull()?.index?.let { maxImageLoaded = it }
                     getView()?.addContent(LinkedList(images))
-                    isLoading = false
+                    setLoadingState(false)
                 })
 
     }
