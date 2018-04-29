@@ -1,8 +1,11 @@
 package ru.dmpolyakov.yandexgallery.ui.gallery
 
 import android.os.Bundle
-import io.reactivex.android.schedulers.AndroidSchedulers
-import ru.dmpolyakov.yandexgallery.data.ImageRepository
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_gallery.*
+import ru.dmpolyakov.yandexgallery.R
+import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 import ru.dmpolyakov.yandexgallery.ui.base.BaseActivity
 import ru.dmpolyakov.yandexgallery.ui.base.BasePresenter
 
@@ -15,14 +18,15 @@ class GalleryActivity : BaseActivity(), GalleryView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_gallery)
 
-        ImageRepository().getImages(5)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({images, t ->
-                    val a = 1
-                    val b = a + 9
-                })
+        galleryRv.layoutManager = GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false)
+        galleryRv.adapter = PreviewRvAdapter()
 
         presenter.attachView(this)
+    }
+
+    override fun showImages(images: List<ImageFile>) {
+        (galleryRv.adapter as? PreviewRvAdapter)?.swapData(images)
     }
 }

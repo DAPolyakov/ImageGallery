@@ -1,6 +1,7 @@
 package ru.dmpolyakov.yandexgallery.ui.gallery
 
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiConsumer
 import io.reactivex.schedulers.Schedulers
 import ru.dmpolyakov.yandexgallery.data.ImageRepository
@@ -14,7 +15,7 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
     private var imagesInFolder = 0
 
     override fun viewIsReady() {
-
+        loadFolder(0)
     }
 
     private fun loadFolder(offset: Int) {
@@ -36,13 +37,14 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
                     ImageFile(
                             name = it.name,
                             created = it.created,
-                            preview = it.preview,
+                            previewUrl = it.previewUrl,
                             index = offset + imgIndex++,
                             imagesInFolder = 0)
                 }
                 .toList()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ images, t ->
-
+                    getView()?.showImages(images)
                 })
 
     }
