@@ -60,6 +60,7 @@ class PreviewRvAdapter(val listener: PreviewRvAdapterListener) : RecyclerView.Ad
             Picasso.get()
                     .load(item.previewUrl)
                     .fit()
+                    .placeholder(R.drawable.placeholder)
                     .centerCrop()
                     .into(preview)
         }
