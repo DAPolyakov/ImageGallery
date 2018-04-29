@@ -8,14 +8,25 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import ru.dmpolyakov.yandexgallery.R
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
+import java.util.*
 
+interface PreviewRvAdapterListener {
+    fun onItemClick(item: ImageFile)
+    fun loadMoreContent()
+}
 
-class PreviewRvAdapter() : RecyclerView.Adapter<PreviewRvAdapter.ViewHolder>() {
+class PreviewRvAdapter(val listener: PreviewRvAdapterListener) : RecyclerView.Adapter<PreviewRvAdapter.ViewHolder>() {
 
-    private var items: List<ImageFile> = emptyList()
+    private var items: LinkedList<ImageFile> = LinkedList()
 
-    fun swapData(newData: List<ImageFile>) {
-        items = newData
+    fun swapData(newData: LinkedList<ImageFile>) {
+        items.clear()
+        items.addAll(newData)
+        notifyDataSetChanged()
+    }
+
+    fun addData(newData: LinkedList<ImageFile>) {
+        items.addAll(newData)
         notifyDataSetChanged()
     }
 
@@ -26,6 +37,10 @@ class PreviewRvAdapter() : RecyclerView.Adapter<PreviewRvAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.fill(items[position])
+
+        if (position >= (itemCount * 0.7)) {
+            listener.loadMoreContent()
+        }
     }
 
     override fun getItemCount(): Int {
@@ -34,6 +49,12 @@ class PreviewRvAdapter() : RecyclerView.Adapter<PreviewRvAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val preview = view.findViewById<ImageView>(R.id.preview)
+
+        init {
+            preview.setOnClickListener {
+                listener.onItemClick(items[adapterPosition])
+            }
+        }
 
         fun fill(item: ImageFile) {
             Picasso.get()

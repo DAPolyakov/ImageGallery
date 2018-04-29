@@ -7,6 +7,5 @@ data class ImageFile(
         @Json(name = "name") val name: String?,
         @Json(name = "created") val created: String?,
         @Json(name = "preview") val previewUrl: String?,
-        var index: Int = -1,
-        var imagesInFolder: Int = 0
+        var index: Int = -1
 )

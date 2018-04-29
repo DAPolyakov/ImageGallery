@@ -7,12 +7,12 @@ import kotlinx.android.synthetic.main.activity_gallery.*
 import ru.dmpolyakov.yandexgallery.R
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 import ru.dmpolyakov.yandexgallery.ui.base.BaseActivity
-import ru.dmpolyakov.yandexgallery.ui.base.BasePresenter
+import java.util.*
 
 
 class GalleryActivity : BaseActivity(), GalleryView {
 
-    override val presenter: BasePresenter<GalleryView> by lazy {
+    override val presenter by lazy {
         GalleryPresenter()
     }
 
@@ -21,12 +21,25 @@ class GalleryActivity : BaseActivity(), GalleryView {
         setContentView(R.layout.activity_gallery)
 
         galleryRv.layoutManager = GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false)
-        galleryRv.adapter = PreviewRvAdapter()
+
+        galleryRv.adapter = PreviewRvAdapter(object : PreviewRvAdapterListener {
+            override fun onItemClick(item: ImageFile) {
+                presenter.onItemClick(item)
+            }
+
+            override fun loadMoreContent() {
+                presenter.loadMoreContent()
+            }
+        })
 
         presenter.attachView(this)
     }
 
-    override fun showImages(images: List<ImageFile>) {
+    override fun swapContent(images: LinkedList<ImageFile>) {
         (galleryRv.adapter as? PreviewRvAdapter)?.swapData(images)
+    }
+
+    override fun addContent(images: LinkedList<ImageFile>) {
+        (galleryRv.adapter as? PreviewRvAdapter)?.addData(images)
     }
 }
