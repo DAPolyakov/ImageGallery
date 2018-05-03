@@ -59,4 +59,13 @@ class GalleryActivity : BaseActivity(), GalleryView {
     override fun addContent(images: LinkedList<ImageFile>) {
         (galleryRv.adapter as? PreviewRvAdapter)?.addData(images)
     }
+
+    override fun showErrorState(message: Int) {
+        errorState.visibility = View.VISIBLE
+        errorMessage.setText(message)
+    }
+
+    override fun hideErrorState() {
+        errorState.visibility = View.GONE
+    }
 }
