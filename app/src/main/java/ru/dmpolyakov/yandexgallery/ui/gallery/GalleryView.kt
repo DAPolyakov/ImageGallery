@@ -10,4 +10,6 @@ interface GalleryView : MvpView {
     fun addContent(images: LinkedList<ImageFile>)
     fun showLoading()
     fun hideLoading()
+    fun showEmptyState()
+    fun hideEmptyState()
 }

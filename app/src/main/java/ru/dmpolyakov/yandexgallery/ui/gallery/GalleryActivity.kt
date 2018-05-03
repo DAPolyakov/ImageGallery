@@ -36,12 +36,20 @@ class GalleryActivity : BaseActivity(), GalleryView {
         presenter.attachView(this)
     }
 
-    override fun showLoading(){
+    override fun showLoading() {
         progressBar.visibility = View.VISIBLE
     }
 
-    override fun hideLoading(){
+    override fun hideLoading() {
         progressBar.visibility = View.GONE
+    }
+
+    override fun showEmptyState() {
+        emptyState.visibility = View.VISIBLE
+    }
+
+    override fun hideEmptyState() {
+        emptyState.visibility = View.GONE
     }
 
     override fun swapContent(images: LinkedList<ImageFile>) {

@@ -72,6 +72,12 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
                     images.lastOrNull()?.index?.let { maxImageLoaded = it }
                     getView()?.addContent(LinkedList(images))
                     setLoadingState(false)
+
+                    if (maxImageLoaded == 0){
+                        getView()?.showEmptyState()
+                    } else {
+                        getView()?.hideEmptyState()
+                    }
                 })
 
     }

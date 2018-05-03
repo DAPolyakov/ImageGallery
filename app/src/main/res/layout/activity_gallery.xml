@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/grayish_violet"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/grayish_violet">
 
     <View
         android:id="@+id/header"
@@ -17,6 +17,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/galleryRv"
+        android:visibility="visible"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="android.support.v7.widget.GridLayoutManager"
@@ -25,6 +26,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header"
         tools:listitem="@layout/item_preview" />
+
+    <ru.dmpolyakov.yandexgallery.ui.views.FontableTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Нет фотографий"
+        android:textAlignment="center"
+        android:id="@+id/emptyState"
+        android:visibility="gone"
+        android:textColor="#737280"
+        android:textSize="28sp"
+        app:customFont="@string/font_roboto_light_italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header" />
 
     <ProgressBar
         android:id="@+id/progressBar"
