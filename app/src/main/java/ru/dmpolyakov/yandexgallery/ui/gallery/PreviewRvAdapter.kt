@@ -8,24 +8,23 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import ru.dmpolyakov.yandexgallery.R
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
-import java.util.*
 
 interface PreviewRvAdapterListener {
-    fun onItemClick(item: ImageFile)
+    fun onItemClick(items: List<ImageFile>, selected: Int)
     fun loadMoreContent()
 }
 
 class PreviewRvAdapter(val listener: PreviewRvAdapterListener) : RecyclerView.Adapter<PreviewRvAdapter.ViewHolder>() {
 
-    private var items: LinkedList<ImageFile> = LinkedList()
+    private var items: ArrayList<ImageFile> = ArrayList()
 
-    fun swapData(newData: LinkedList<ImageFile>) {
+    fun swapData(newData: List<ImageFile>) {
         items.clear()
         items.addAll(newData)
         notifyDataSetChanged()
     }
 
-    fun addData(newData: LinkedList<ImageFile>) {
+    fun addData(newData: List<ImageFile>) {
         items.addAll(newData)
         notifyDataSetChanged()
     }
@@ -52,7 +51,7 @@ class PreviewRvAdapter(val listener: PreviewRvAdapterListener) : RecyclerView.Ad
 
         init {
             preview.setOnClickListener {
-                listener.onItemClick(items[adapterPosition])
+                listener.onItemClick(items, adapterPosition)
             }
         }
 

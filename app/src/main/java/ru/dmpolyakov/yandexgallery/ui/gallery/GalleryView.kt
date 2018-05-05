@@ -19,5 +19,5 @@ interface GalleryView : MvpView {
     fun showErrorState(@StringRes message: Int)
     fun hideErrorState()
 
-    fun showViewver()
+    fun showViewver(items: List<ImageFile>, selected: Int)
 }

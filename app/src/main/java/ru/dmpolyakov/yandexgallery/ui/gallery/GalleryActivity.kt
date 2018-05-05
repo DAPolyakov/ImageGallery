@@ -26,8 +26,8 @@ class GalleryActivity : BaseActivity(), GalleryView {
         galleryRv.layoutManager = GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false)
 
         galleryRv.adapter = PreviewRvAdapter(object : PreviewRvAdapterListener {
-            override fun onItemClick(item: ImageFile) {
-                presenter.onItemClick(item)
+            override fun onItemClick(items: List<ImageFile>, selected: Int) {
+                presenter.onItemClick(items, selected)
             }
 
             override fun loadMoreContent() {
@@ -71,7 +71,10 @@ class GalleryActivity : BaseActivity(), GalleryView {
         errorState.visibility = View.GONE
     }
 
-    override fun showViewver() {
-        startActivity(Intent(this, ViewverActivity::class.java))
+    override fun showViewver(items: List<ImageFile>, selected: Int) {
+        val intent = Intent(this, ViewverActivity::class.java)
+        intent.putExtra("selected_item_index", selected)
+        intent.putParcelableArrayListExtra("images", ArrayList(items))
+        startActivity(intent)
     }
 }

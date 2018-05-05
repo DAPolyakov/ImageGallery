@@ -1,8 +1,11 @@
 package ru.dmpolyakov.yandexgallery.ui.viewver
 
+import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 import ru.dmpolyakov.yandexgallery.ui.base.MvpView
 
 
 interface ViewverView : MvpView {
 
+    fun setContent(images: List<ImageFile>)
+    fun focustImage(position: Int)
 }
