@@ -1,5 +1,6 @@
 package ru.dmpolyakov.yandexgallery.ui.gallery
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -8,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_gallery.*
 import ru.dmpolyakov.yandexgallery.R
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 import ru.dmpolyakov.yandexgallery.ui.base.BaseActivity
+import ru.dmpolyakov.yandexgallery.ui.viewver.ViewverActivity
 import java.util.*
 
 
@@ -67,5 +69,9 @@ class GalleryActivity : BaseActivity(), GalleryView {
 
     override fun hideErrorState() {
         errorState.visibility = View.GONE
+    }
+
+    override fun showViewver() {
+        startActivity(Intent(this, ViewverActivity::class.java))
     }
 }

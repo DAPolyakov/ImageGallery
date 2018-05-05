@@ -18,4 +18,6 @@ interface GalleryView : MvpView {
 
     fun showErrorState(@StringRes message: Int)
     fun hideErrorState()
+
+    fun showViewver()
 }

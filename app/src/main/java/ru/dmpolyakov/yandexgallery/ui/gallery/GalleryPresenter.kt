@@ -27,6 +27,7 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
 
     fun onItemClick(item: ImageFile) {
         Log.wtf("gallery", item.index.toString())
+        getView()?.showViewver()
     }
 
     fun loadMoreContent() {
