@@ -10,4 +10,6 @@
     <string name="error_network">Нет соединения с Интернетом</string>
     <string name="error_undefined">Возникла неожиданная ошибка</string>
 
+    <string name="from">из</string>
+
 </resources>

@@ -8,4 +8,5 @@ interface ViewverView : MvpView {
 
     fun setContent(images: List<ImageFile>)
     fun focustImage(position: Int)
+    fun setPosition(position: String)
 }

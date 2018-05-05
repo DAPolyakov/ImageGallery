@@ -18,6 +18,14 @@ class ViewverRvAdapter() : RecyclerView.Adapter<ViewverRvAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun getItem(position: Int): ImageFile? {
+        return if (items.size <= position) {
+            null
+        } else {
+            items[position]
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image, parent, false) as ImageView
         return ViewHolder(view)
