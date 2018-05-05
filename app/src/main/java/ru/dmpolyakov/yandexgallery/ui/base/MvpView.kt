@@ -4,4 +4,5 @@ import android.support.annotation.StringRes
 
 interface MvpView {
     fun showMessage(@StringRes message: Int)
+    fun back()
 }

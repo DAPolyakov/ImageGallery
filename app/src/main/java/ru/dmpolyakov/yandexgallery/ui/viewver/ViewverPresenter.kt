@@ -9,4 +9,8 @@ class ViewverPresenter : BasePresenter<ViewverView>() {
 
     }
 
+    fun onBack() {
+        getView()?.back()
+    }
+
 }

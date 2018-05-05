@@ -24,4 +24,7 @@ abstract class BaseActivity : AppCompatActivity(), MvpView {
         Toast.makeText(this, resources.getString(message), Toast.LENGTH_SHORT).show()
     }
 
+    override fun back() {
+        onBackPressed()
+    }
 }
