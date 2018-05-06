@@ -39,6 +39,11 @@ class GalleryActivity : BaseActivity(), GalleryView {
         presenter.attachView(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
+    }
+
     override fun showLoading() {
         progressBar.visibility = View.VISIBLE
     }

@@ -12,6 +12,9 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
     private var isLoading = false
 
     override fun viewIsReady() {
+    }
+
+    fun onResume() {
         val list = ImageRepository.getImages()
         if (list.isEmpty()) {
             loadMoreContent()

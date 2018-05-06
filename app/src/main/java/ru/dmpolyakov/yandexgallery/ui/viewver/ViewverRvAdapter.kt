@@ -9,7 +9,11 @@ import ru.dmpolyakov.yandexgallery.R
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 
 
-class ViewverRvAdapter() : RecyclerView.Adapter<ViewverRvAdapter.ViewHolder>() {
+interface ViewverRvAdapterListener {
+    fun loadMoreContent()
+}
+
+class ViewverRvAdapter(val listener: ViewverRvAdapterListener) : RecyclerView.Adapter<ViewverRvAdapter.ViewHolder>() {
 
     private var items: ArrayList<ImageFile> = ArrayList()
 
@@ -39,6 +43,11 @@ class ViewverRvAdapter() : RecyclerView.Adapter<ViewverRvAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.fill(items[position])
+
+        if (position >= (itemCount * 0.7)) {
+            listener.loadMoreContent()
+        }
+
     }
 
     override fun getItemCount(): Int {

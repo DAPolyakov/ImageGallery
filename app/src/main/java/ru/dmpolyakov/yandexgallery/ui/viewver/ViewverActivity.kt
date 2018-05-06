@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.PagerSnapHelper
 import android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING
-import android.util.Log
 import com.jakewharton.rxbinding2.support.v7.widget.scrollStateChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_viewver.*
@@ -25,7 +24,12 @@ class ViewverActivity : BaseActivity(), ViewverView {
         setContentView(R.layout.activity_viewver)
 
         viewverRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        viewverRv.adapter = ViewverRvAdapter()
+
+        viewverRv.adapter = ViewverRvAdapter(object : ViewverRvAdapterListener {
+            override fun loadMoreContent() {
+                presenter.loadMoreContent()
+            }
+        })
 
         icBack.setOnClickListener {
             presenter.onBack()

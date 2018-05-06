@@ -12,6 +12,7 @@ import ru.dmpolyakov.yandexgallery.ui.base.BasePresenter
 class ViewverPresenter : BasePresenter<ViewverView>() {
 
     private var initialPosition = 0
+    private var isLoading = false
 
     override fun viewIsReady() {
         val list = ImageRepository.getImages()
@@ -24,23 +25,20 @@ class ViewverPresenter : BasePresenter<ViewverView>() {
     }
 
     fun loadMoreContent() {
-//        if (isLoading) return
+        if (isLoading) return
 
-//        getView()?.hideEmptyState()
 //        getView()?.hideErrorState()
-//        setLoadingState(true)
+        setLoadingState(true)
 
         ImageRepository.loadMoreContent()?.apply {
             observeOn(AndroidSchedulers.mainThread())
-//                    .doOnTerminate { setLoadingState(false) }
+                    .doOnTerminate { setLoadingState(false) }
                     .subscribe({
                         getView()?.addContent(it)
                     }, {
 //                        showError(R.string.error_network)
                     })
-        }
-//        } ?: setLoadingState(false)
-
+        } ?: setLoadingState(false)
     }
 
     fun onSnap(image: ImageFile?) {
@@ -49,7 +47,9 @@ class ViewverPresenter : BasePresenter<ViewverView>() {
         }
     }
 
-
+    private fun setLoadingState(loading : Boolean){
+        isLoading = loading
+    }
 
     private fun updatePositionTitle(position : Int){
         getView()?.updatePositionTitle(position, ImageRepository.getImageInFolder())
