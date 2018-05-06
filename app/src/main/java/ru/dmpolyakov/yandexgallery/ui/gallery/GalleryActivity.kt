@@ -9,6 +9,7 @@ import android.support.v7.widget.ListPopupWindow
 import android.view.View
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_gallery.*
+import ru.dmpolyakov.yandexgallery.FolderType
 import ru.dmpolyakov.yandexgallery.R
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 import ru.dmpolyakov.yandexgallery.ui.base.BaseActivity
@@ -58,8 +59,22 @@ class GalleryActivity : BaseActivity(), GalleryView {
                 anchorView = selectedFolder,
                 onItemClickAction = Consumer { position ->
                     selectedFolder.text = data[position]
+                    presenter.selectedFolder(when (position) {
+                        0 -> FolderType.Animals
+                        1 -> FolderType.Nature
+                        2 -> FolderType.Castles
+                        else -> null
+                    })
                 })
         folderSelector?.show()
+    }
+
+    override fun updateFolderTitle(folderType: FolderType) {
+        selectedFolder.text = getString(when (folderType) {
+            FolderType.Animals -> R.string.funny_animals
+            FolderType.Nature -> R.string.amazing_nature
+            FolderType.Castles -> R.string.mysterious_castles
+        })
     }
 
     override fun onResume() {

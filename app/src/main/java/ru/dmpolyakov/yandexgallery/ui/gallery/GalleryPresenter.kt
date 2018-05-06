@@ -2,8 +2,10 @@ package ru.dmpolyakov.yandexgallery.ui.gallery
 
 import android.support.annotation.StringRes
 import io.reactivex.android.schedulers.AndroidSchedulers
+import ru.dmpolyakov.yandexgallery.FolderType
 import ru.dmpolyakov.yandexgallery.R
 import ru.dmpolyakov.yandexgallery.data.ImageRepository
+import ru.dmpolyakov.yandexgallery.data.ImageRepository.loadMoreContent
 import ru.dmpolyakov.yandexgallery.ui.base.BasePresenter
 
 
@@ -16,6 +18,8 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
     }
 
     fun onResume() {
+        getView()?.updateFolderTitle(ImageRepository.getFolderType())
+
         val list = ImageRepository.getImages()
         if (list.isEmpty()) {
             loadMoreContent()
@@ -30,6 +34,16 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
         list.add(R.string.amazing_nature)
         list.add(R.string.mysterious_castles)
         getView()?.showFolderSelector(list)
+    }
+
+    fun selectedFolder(folderType: FolderType?) {
+        folderType?.let {
+            if (ImageRepository.getFolderType() != it) {
+                ImageRepository.openFolder(it)
+                getView()?.swapContent(emptyList())
+                loadMoreContent()
+            }
+        }
     }
 
     fun onItemClick(selected: Int) {
