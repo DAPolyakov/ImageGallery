@@ -62,6 +62,11 @@ class ViewverActivity : BaseActivity(), ViewverView {
         return item
     }
 
+    override fun onStop() {
+        intent.putExtra("selected_item_index", getCurrentImageFile().index - 1)
+        super.onStop()
+    }
+
     override fun shareUrl(url: String?) {
         url?.let {
             val sendIntent = Intent()

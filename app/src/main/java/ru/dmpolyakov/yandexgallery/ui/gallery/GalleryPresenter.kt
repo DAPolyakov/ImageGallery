@@ -38,7 +38,7 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
 
     fun selectedFolder(folderType: FolderType?) {
         folderType?.let {
-            if (ImageRepository.getFolderType() != it) {
+            if ((ImageRepository.getFolderType() != it) || (ImageRepository.getImages().isEmpty())) {
                 ImageRepository.openFolder(it)
                 getView()?.swapContent(emptyList())
                 loadMoreContent()
