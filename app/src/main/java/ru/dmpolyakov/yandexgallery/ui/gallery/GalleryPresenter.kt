@@ -12,6 +12,7 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
     private var isLoading = false
 
     override fun viewIsReady() {
+
     }
 
     fun onResume() {
@@ -21,6 +22,14 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
         } else {
             getView()?.swapContent(list)
         }
+    }
+
+    fun onFolderSelector() {
+        val list = ArrayList<@StringRes Int>()
+        list.add(R.string.funny_animals)
+        list.add(R.string.amazing_nature)
+        list.add(R.string.mysterious_castles)
+        getView()?.showFolderSelector(list)
     }
 
     fun onItemClick(selected: Int) {

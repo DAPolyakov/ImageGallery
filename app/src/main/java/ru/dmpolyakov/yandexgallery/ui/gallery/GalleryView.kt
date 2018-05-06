@@ -20,4 +20,5 @@ interface GalleryView : MvpView {
     fun hideErrorState()
 
     fun showViewver(selected: Int)
+    fun showFolderSelector(@StringRes res: List<Int>)
 }

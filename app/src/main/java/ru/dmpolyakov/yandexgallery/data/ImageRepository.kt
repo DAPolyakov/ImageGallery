@@ -16,6 +16,7 @@ object ImageRepository {
     private val images = ArrayList<ImageFile>()
     private var imagesInFolder: Int? = null
     private var maxImageLoaded = 0
+    private var folderTitle = ""
 
     fun getImageInFolder(): Int? {
         return imagesInFolder
