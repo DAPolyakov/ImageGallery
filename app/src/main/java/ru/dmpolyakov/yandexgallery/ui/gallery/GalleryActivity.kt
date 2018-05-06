@@ -1,6 +1,7 @@
 package ru.dmpolyakov.yandexgallery.ui.gallery
 
 import android.content.Intent
+import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v7.widget.GridLayoutManager
@@ -29,7 +30,10 @@ class GalleryActivity : BaseActivity(), GalleryView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gallery)
 
-        galleryRv.layoutManager = GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false)
+        galleryRv.layoutManager = when (resources.configuration.orientation) {
+            ORIENTATION_PORTRAIT -> GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false)
+            else -> GridLayoutManager(this, 4, LinearLayoutManager.VERTICAL, false)
+        }
 
         galleryRv.adapter = PreviewRvAdapter(object : PreviewRvAdapterListener {
             override fun onItemClick(selected: Int) {
