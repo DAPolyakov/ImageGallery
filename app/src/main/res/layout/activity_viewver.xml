@@ -6,10 +6,25 @@
     android:layout_height="match_parent"
     android:background="@color/grayish_violet">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/viewverRv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_image" />
+
     <ImageView
         android:id="@+id/header"
+        android:alpha="0.4"
         android:layout_width="0dp"
         android:layout_height="48dp"
+
         android:src="@drawable/gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,18 +72,5 @@
         app:layout_constraintEnd_toEndOf="@id/header"
         app:layout_constraintTop_toTopOf="@id/header" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/viewverRv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.64"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header"
-        tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_image" />
 
 </android.support.constraint.ConstraintLayout>

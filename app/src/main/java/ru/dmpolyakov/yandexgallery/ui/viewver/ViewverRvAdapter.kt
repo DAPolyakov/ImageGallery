@@ -1,6 +1,7 @@
 package ru.dmpolyakov.yandexgallery.ui.viewver
 
 import android.support.v7.widget.RecyclerView
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -59,8 +60,8 @@ class ViewverRvAdapter(val listener: ViewverRvAdapterListener) : RecyclerView.Ad
             Picasso.get()
                     .load(item.previewUrl)
                     .fit()
-                    .placeholder(R.drawable.placeholder)
                     .centerInside()
+                    .placeholder(R.drawable.placeholder)
                     .into(view)
         }
     }

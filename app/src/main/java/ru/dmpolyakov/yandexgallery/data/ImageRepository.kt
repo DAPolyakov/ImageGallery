@@ -21,10 +21,6 @@ object ImageRepository {
         return imagesInFolder
     }
 
-    fun getMaxImageLoaded(): Int {
-        return maxImageLoaded
-    }
-
     fun getImages(): List<ImageFile> {
         return images
     }

@@ -47,7 +47,7 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
     }
 
     private fun showError(@StringRes res: Int) {
-        if (ImageRepository.getMaxImageLoaded() == 0) {
+        if (ImageRepository.getImages().isEmpty()) {
             getView()?.showErrorState(res)
         } else {
             getView()?.showMessage(res)
@@ -65,7 +65,7 @@ class GalleryPresenter : BasePresenter<GalleryView>() {
     }
 
     private fun checkEmptyState() {
-        if (ImageRepository.getMaxImageLoaded() == 0) {
+        if (ImageRepository.getImages().isEmpty()) {
             getView()?.showEmptyState()
         } else {
             getView()?.hideEmptyState()
