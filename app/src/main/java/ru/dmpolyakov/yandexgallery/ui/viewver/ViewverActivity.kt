@@ -32,7 +32,7 @@ class ViewverActivity : BaseActivity(), ViewverView {
         }
 
         intent.apply {
-            presenter.loadData(getIntExtra("selected_item_index", 0), getParcelableArrayListExtra("images"))
+            presenter.loadData(getIntExtra("selected_item_index", 0))
         }
 
         PagerSnapHelper().attachToRecyclerView(viewverRv)
@@ -55,6 +55,10 @@ class ViewverActivity : BaseActivity(), ViewverView {
 
     override fun setContent(images: List<ImageFile>) {
         (viewverRv.adapter as ViewverRvAdapter).swapData(images)
+    }
+
+    override fun addContent(images: List<ImageFile>) {
+        (viewverRv.adapter as ViewverRvAdapter).addData(images)
     }
 
     override fun focustImage(position: Int) {

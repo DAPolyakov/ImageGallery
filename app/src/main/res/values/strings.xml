@@ -7,7 +7,7 @@
     <string name="font_roboto_regular">robotoregular.ttf</string>
 
     <string name="empty_folder">Нет фотографий</string>
-    <string name="error_network">Нет соединения с Интернетом</string>
+    <string name="error_network">Ошибка соединения с сервером</string>
     <string name="error_undefined">Возникла неожиданная ошибка</string>
 
     <string name="from">из</string>

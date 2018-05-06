@@ -1,5 +1,9 @@
 package ru.dmpolyakov.yandexgallery.ui.viewver
 
+import io.reactivex.android.schedulers.AndroidSchedulers
+import ru.dmpolyakov.yandexgallery.R
+import ru.dmpolyakov.yandexgallery.data.ImageRepository
+import ru.dmpolyakov.yandexgallery.data.ImageRepository.loadMoreContent
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 import ru.dmpolyakov.yandexgallery.ui.base.BasePresenter
 
@@ -7,11 +11,35 @@ import ru.dmpolyakov.yandexgallery.ui.base.BasePresenter
 class ViewverPresenter : BasePresenter<ViewverView>() {
 
     private var initialPosition = 0
-    private var images: List<ImageFile> = emptyList()
 
     override fun viewIsReady() {
-        getView()?.setContent(images)
-        getView()?.focustImage(initialPosition)
+        val list = ImageRepository.getImages()
+        if (list.isEmpty()) {
+            loadMoreContent()
+        } else {
+            getView()?.setContent(list)
+            getView()?.focustImage(initialPosition)
+        }
+    }
+
+    fun loadMoreContent() {
+//        if (isLoading) return
+
+//        getView()?.hideEmptyState()
+//        getView()?.hideErrorState()
+//        setLoadingState(true)
+
+        ImageRepository.loadMoreContent()?.apply {
+            observeOn(AndroidSchedulers.mainThread())
+//                    .doOnTerminate { setLoadingState(false) }
+                    .subscribe({
+                        getView()?.addContent(it)
+                    }, {
+//                        showError(R.string.error_network)
+                    })
+        }
+//        } ?: setLoadingState(false)
+
     }
 
     fun onSnap(image: ImageFile?) {
@@ -20,9 +48,8 @@ class ViewverPresenter : BasePresenter<ViewverView>() {
         }
     }
 
-    fun loadData(selected: Int, images: List<ImageFile>) {
+    fun loadData(selected: Int) {
         initialPosition = selected
-        this.images = images
     }
 
     fun onBack() {

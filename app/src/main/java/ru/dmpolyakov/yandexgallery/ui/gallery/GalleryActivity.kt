@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import kotlinx.android.synthetic.main.activity_gallery.*
 import ru.dmpolyakov.yandexgallery.R
+import ru.dmpolyakov.yandexgallery.R.id.*
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 import ru.dmpolyakov.yandexgallery.ui.base.BaseActivity
 import ru.dmpolyakov.yandexgallery.ui.viewver.ViewverActivity
@@ -26,8 +27,8 @@ class GalleryActivity : BaseActivity(), GalleryView {
         galleryRv.layoutManager = GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false)
 
         galleryRv.adapter = PreviewRvAdapter(object : PreviewRvAdapterListener {
-            override fun onItemClick(items: List<ImageFile>, selected: Int) {
-                presenter.onItemClick(items, selected)
+            override fun onItemClick(selected: Int) {
+                presenter.onItemClick(selected)
             }
 
             override fun loadMoreContent() {
@@ -54,11 +55,11 @@ class GalleryActivity : BaseActivity(), GalleryView {
         emptyState.visibility = View.GONE
     }
 
-    override fun swapContent(images: LinkedList<ImageFile>) {
+    override fun swapContent(images: List<ImageFile>) {
         (galleryRv.adapter as? PreviewRvAdapter)?.swapData(images)
     }
 
-    override fun addContent(images: LinkedList<ImageFile>) {
+    override fun addContent(images: List<ImageFile>) {
         (galleryRv.adapter as? PreviewRvAdapter)?.addData(images)
     }
 
@@ -71,10 +72,9 @@ class GalleryActivity : BaseActivity(), GalleryView {
         errorState.visibility = View.GONE
     }
 
-    override fun showViewver(items: List<ImageFile>, selected: Int) {
+    override fun showViewver(selected: Int) {
         val intent = Intent(this, ViewverActivity::class.java)
         intent.putExtra("selected_item_index", selected)
-        intent.putParcelableArrayListExtra("images", ArrayList(items))
         startActivity(intent)
     }
 }

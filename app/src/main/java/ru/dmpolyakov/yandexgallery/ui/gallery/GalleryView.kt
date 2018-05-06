@@ -7,8 +7,8 @@ import java.util.*
 
 
 interface GalleryView : MvpView {
-    fun swapContent(images: LinkedList<ImageFile>)
-    fun addContent(images: LinkedList<ImageFile>)
+    fun swapContent(images: List<ImageFile>)
+    fun addContent(images: List<ImageFile>)
 
     fun showLoading()
     fun hideLoading()
@@ -19,5 +19,5 @@ interface GalleryView : MvpView {
     fun showErrorState(@StringRes message: Int)
     fun hideErrorState()
 
-    fun showViewver(items: List<ImageFile>, selected: Int)
+    fun showViewver(selected: Int)
 }

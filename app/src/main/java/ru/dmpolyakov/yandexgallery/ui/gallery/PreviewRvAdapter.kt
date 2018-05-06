@@ -10,7 +10,7 @@ import ru.dmpolyakov.yandexgallery.R
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 
 interface PreviewRvAdapterListener {
-    fun onItemClick(items: List<ImageFile>, selected: Int)
+    fun onItemClick(selected: Int)
     fun loadMoreContent()
 }
 
@@ -51,7 +51,7 @@ class PreviewRvAdapter(val listener: PreviewRvAdapterListener) : RecyclerView.Ad
 
         init {
             preview.setOnClickListener {
-                listener.onItemClick(items, adapterPosition)
+                listener.onItemClick(adapterPosition)
             }
         }
 

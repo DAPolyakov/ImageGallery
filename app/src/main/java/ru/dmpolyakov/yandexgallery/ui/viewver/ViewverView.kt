@@ -7,6 +7,7 @@ import ru.dmpolyakov.yandexgallery.ui.base.MvpView
 interface ViewverView : MvpView {
 
     fun setContent(images: List<ImageFile>)
+    fun addContent(images: List<ImageFile>)
     fun focustImage(position: Int)
     fun setPosition(position: String)
 }

@@ -11,10 +11,16 @@ import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 
 class ViewverRvAdapter() : RecyclerView.Adapter<ViewverRvAdapter.ViewHolder>() {
 
-    private var items: List<ImageFile> = emptyList()
+    private var items: ArrayList<ImageFile> = ArrayList()
 
     fun swapData(newData: List<ImageFile>) {
-        items = newData
+        items.clear()
+        items.addAll(newData)
+        notifyDataSetChanged()
+    }
+
+    fun addData(newData: List<ImageFile>) {
+        items.addAll(newData)
         notifyDataSetChanged()
     }
 
