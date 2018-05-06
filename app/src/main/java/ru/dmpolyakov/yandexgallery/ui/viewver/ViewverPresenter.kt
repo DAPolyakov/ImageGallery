@@ -2,6 +2,7 @@ package ru.dmpolyakov.yandexgallery.ui.viewver
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import ru.dmpolyakov.yandexgallery.R
+import ru.dmpolyakov.yandexgallery.R.id.position
 import ru.dmpolyakov.yandexgallery.data.ImageRepository
 import ru.dmpolyakov.yandexgallery.data.ImageRepository.loadMoreContent
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
@@ -44,8 +45,14 @@ class ViewverPresenter : BasePresenter<ViewverView>() {
 
     fun onSnap(image: ImageFile?) {
         image?.let {
-            getView()?.setPosition(it.index.toString())
+            updatePositionTitle(it.index)
         }
+    }
+
+
+
+    private fun updatePositionTitle(position : Int){
+        getView()?.updatePositionTitle(position, ImageRepository.getImageInFolder())
     }
 
     fun loadData(selected: Int) {

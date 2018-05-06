@@ -43,10 +43,14 @@ class ViewverActivity : BaseActivity(), ViewverView {
                 .subscribe({ state ->
                     val position = (viewverRv.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     presenter.onSnap((viewverRv.adapter as ViewverRvAdapter).getItem(position))
-                    Log.wtf("snap", "sample: $state")
                 })
 
         presenter.attachView(this)
+    }
+
+    override fun updatePositionTitle(position: Int, max: Int?) {
+        val title = position.toString() + " ${getString(R.string.from)} " + max
+        this.position.text = title
     }
 
     override fun setPosition(position: String) {
@@ -63,5 +67,6 @@ class ViewverActivity : BaseActivity(), ViewverView {
 
     override fun focustImage(position: Int) {
         viewverRv.scrollToPosition(position)
+        presenter.onSnap((viewverRv.adapter as ViewverRvAdapter).getItem(position))
     }
 }
