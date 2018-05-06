@@ -27,7 +27,6 @@ class ViewverPresenter : BasePresenter<ViewverView>() {
     fun loadMoreContent() {
         if (isLoading) return
 
-//        getView()?.hideErrorState()
         setLoadingState(true)
 
         ImageRepository.loadMoreContent()?.apply {
@@ -36,7 +35,7 @@ class ViewverPresenter : BasePresenter<ViewverView>() {
                     .subscribe({
                         getView()?.addContent(it)
                     }, {
-//                        showError(R.string.error_network)
+                        getView()?.showMessage(R.string.error_network)
                     })
         } ?: setLoadingState(false)
     }
