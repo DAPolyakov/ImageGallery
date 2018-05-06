@@ -1,13 +1,16 @@
 package ru.dmpolyakov.yandexgallery.ui.gallery
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import kotlinx.android.synthetic.main.activity_gallery.*
 import ru.dmpolyakov.yandexgallery.R
+import ru.dmpolyakov.yandexgallery.R.id.*
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 import ru.dmpolyakov.yandexgallery.ui.base.BaseActivity
+import ru.dmpolyakov.yandexgallery.ui.viewver.ViewverActivity
 import java.util.*
 
 
@@ -24,8 +27,8 @@ class GalleryActivity : BaseActivity(), GalleryView {
         galleryRv.layoutManager = GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false)
 
         galleryRv.adapter = PreviewRvAdapter(object : PreviewRvAdapterListener {
-            override fun onItemClick(item: ImageFile) {
-                presenter.onItemClick(item)
+            override fun onItemClick(selected: Int) {
+                presenter.onItemClick(selected)
             }
 
             override fun loadMoreContent() {
@@ -34,6 +37,11 @@ class GalleryActivity : BaseActivity(), GalleryView {
         })
 
         presenter.attachView(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
     }
 
     override fun showLoading() {
@@ -52,11 +60,11 @@ class GalleryActivity : BaseActivity(), GalleryView {
         emptyState.visibility = View.GONE
     }
 
-    override fun swapContent(images: LinkedList<ImageFile>) {
+    override fun swapContent(images: List<ImageFile>) {
         (galleryRv.adapter as? PreviewRvAdapter)?.swapData(images)
     }
 
-    override fun addContent(images: LinkedList<ImageFile>) {
+    override fun addContent(images: List<ImageFile>) {
         (galleryRv.adapter as? PreviewRvAdapter)?.addData(images)
     }
 
@@ -67,5 +75,11 @@ class GalleryActivity : BaseActivity(), GalleryView {
 
     override fun hideErrorState() {
         errorState.visibility = View.GONE
+    }
+
+    override fun showViewver(selected: Int) {
+        val intent = Intent(this, ViewverActivity::class.java)
+        intent.putExtra("selected_item_index", selected)
+        startActivity(intent)
     }
 }

@@ -1,20 +1,20 @@
-package ru.dmpolyakov.yandexgallery.ui.gallery
+package ru.dmpolyakov.yandexgallery.ui.viewver
 
 import android.support.v7.widget.RecyclerView
+import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import ru.dmpolyakov.yandexgallery.R
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 
-interface PreviewRvAdapterListener {
-    fun onItemClick(selected: Int)
+
+interface ViewverRvAdapterListener {
     fun loadMoreContent()
 }
 
-class PreviewRvAdapter(val listener: PreviewRvAdapterListener) : RecyclerView.Adapter<PreviewRvAdapter.ViewHolder>() {
+class ViewverRvAdapter(val listener: ViewverRvAdapterListener) : RecyclerView.Adapter<ViewverRvAdapter.ViewHolder>() {
 
     private var items: ArrayList<ImageFile> = ArrayList()
 
@@ -29,8 +29,16 @@ class PreviewRvAdapter(val listener: PreviewRvAdapterListener) : RecyclerView.Ad
         notifyDataSetChanged()
     }
 
+    fun getItem(position: Int): ImageFile? {
+        return if (items.size <= position) {
+            null
+        } else {
+            items[position]
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_preview, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image, parent, false) as ImageView
         return ViewHolder(view)
     }
 
@@ -40,28 +48,21 @@ class PreviewRvAdapter(val listener: PreviewRvAdapterListener) : RecyclerView.Ad
         if (position >= (itemCount * 0.7)) {
             listener.loadMoreContent()
         }
+
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val preview = view.findViewById<ImageView>(R.id.preview)
-
-        init {
-            preview.setOnClickListener {
-                listener.onItemClick(adapterPosition)
-            }
-        }
-
+    inner class ViewHolder(val view: ImageView) : RecyclerView.ViewHolder(view) {
         fun fill(item: ImageFile) {
             Picasso.get()
                     .load(item.previewUrl)
                     .fit()
+                    .centerInside()
                     .placeholder(R.drawable.placeholder)
-                    .centerCrop()
-                    .into(preview)
+                    .into(view)
         }
     }
 }
