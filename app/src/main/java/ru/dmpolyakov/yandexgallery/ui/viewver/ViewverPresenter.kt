@@ -40,6 +40,12 @@ class ViewverPresenter : BasePresenter<ViewverView>() {
         } ?: setLoadingState(false)
     }
 
+    fun onShareImage(){
+        getView()?.apply{
+            shareUrl(getCurrentImageFile().previewUrl)
+        }
+    }
+
     fun onSnap(image: ImageFile?) {
         image?.let {
             updatePositionTitle(it.index)

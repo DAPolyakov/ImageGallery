@@ -12,4 +12,6 @@ interface ViewverView : MvpView {
     fun setPosition(position: String)
 
     fun updatePositionTitle(position: Int, max: Int?)
+    fun getCurrentImageFile(): ImageFile
+    fun shareUrl(url: String?)
 }

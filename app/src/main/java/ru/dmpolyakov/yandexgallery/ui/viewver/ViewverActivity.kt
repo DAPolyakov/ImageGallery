@@ -1,5 +1,6 @@
 package ru.dmpolyakov.yandexgallery.ui.viewver
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.PagerSnapHelper
@@ -44,12 +45,31 @@ class ViewverActivity : BaseActivity(), ViewverView {
                 .filter { state -> state < SCROLL_STATE_SETTLING }
                 .sample(250, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ state ->
-                    val position = (viewverRv.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                    presenter.onSnap((viewverRv.adapter as ViewverRvAdapter).getItem(position))
+                .subscribe({ _ ->
+                    presenter.onSnap(getCurrentImageFile())
                 })
 
+        icShare.setOnClickListener {
+            presenter.onShareImage()
+        }
+
         presenter.attachView(this)
+    }
+
+    override fun getCurrentImageFile(): ImageFile {
+        val position = (viewverRv.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+        val item = (viewverRv.adapter as ViewverRvAdapter).getItem(position) as ImageFile
+        return item
+    }
+
+    override fun shareUrl(url: String?) {
+        url?.let {
+            val sendIntent = Intent()
+            sendIntent.action = Intent.ACTION_SEND
+            sendIntent.putExtra(Intent.EXTRA_TEXT, it)
+            sendIntent.type = "text/plain"
+            startActivity(Intent.createChooser(sendIntent, resources.getString(R.string.share_url)))
+        }
     }
 
     override fun updatePositionTitle(position: Int, max: Int?) {
