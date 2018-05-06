@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">YandexGallery</string>
+    <string name="app_name">Галерея</string>
 
     <string name="font_roboto_light_italic">robotolightitalic.ttf</string>
     <string name="font_roboto_medium">robotomedium.ttf</string>
@@ -12,7 +12,7 @@
     <string name="funny_animals">Забавные животные</string>
     <string name="amazing_nature">Удивительная природа</string>
     <string name="mysterious_castles">Загадочные замки</string>
-    <string name="from">из</string>
+    <string name="of">из</string>
     <string name="share_url">Поделиться ссылкой</string>
 
 </resources>

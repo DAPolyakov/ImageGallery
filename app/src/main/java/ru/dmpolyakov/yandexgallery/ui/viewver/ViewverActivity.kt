@@ -73,7 +73,7 @@ class ViewverActivity : BaseActivity(), ViewverView {
     }
 
     override fun updatePositionTitle(position: Int, max: Int?) {
-        val title = position.toString() + " ${getString(R.string.from)} " + max
+        val title = position.toString() + " ${getString(R.string.of)} " + max
         this.position.text = title
     }
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gallery</string>
+    <string name="empty_folder">No content</string>
+
+    <string name="funny_animals">Funny animals</string>
+    <string name="amazing_nature">Amaing nature</string>
+    <string name="mysterious_castles">Mysterious castles</string>
+
+    <string name="of">of</string>
+    <string name="share_url">Share url</string>
+
+    <string name="error_undefined">Undefined error</string>
+    <string name="error_network">Error connecting to server</string>
+</resources>
