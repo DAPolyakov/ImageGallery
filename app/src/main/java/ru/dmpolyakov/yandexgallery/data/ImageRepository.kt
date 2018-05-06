@@ -3,6 +3,7 @@ package ru.dmpolyakov.yandexgallery.data
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import ru.dmpolyakov.yandexgallery.FolderType
 import ru.dmpolyakov.yandexgallery.network.NetworkModule
 import ru.dmpolyakov.yandexgallery.network.models.Folder
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
@@ -16,6 +17,11 @@ object ImageRepository {
     private val images = ArrayList<ImageFile>()
     private var imagesInFolder: Int? = null
     private var maxImageLoaded = 0
+    private var folderType = FolderType.Animals
+
+    fun getFolderType(): FolderType {
+        return folderType
+    }
 
     fun getImageInFolder(): Int? {
         return imagesInFolder
@@ -33,6 +39,17 @@ object ImageRepository {
         } ?: return loadImages(maxImageLoaded)
     }
 
+    fun openFolder(folderType: FolderType) {
+        this.folderType = folderType
+        clearData()
+    }
+
+    private fun clearData() {
+        maxImageLoaded = 0
+        imagesInFolder = null
+        images.clear()
+    }
+
     private fun loadImages(offset: Int): Observable<List<ImageFile>> {
         return getFolder(offset)
                 .doOnSuccess {
@@ -44,7 +61,7 @@ object ImageRepository {
     }
 
     private fun getFolder(offset: Int): Single<Folder> {
-        return publicService.getFolder(offset)
+        return publicService.getFolder(folderType, offset)
     }
 
     private fun getImagesFromFolder(observable: Observable<List<ImageFile>>, offset: Int): Observable<List<ImageFile>> {

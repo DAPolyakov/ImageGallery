@@ -2,19 +2,24 @@ package ru.dmpolyakov.yandexgallery.ui.gallery
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.ListPopupWindow
 import android.view.View
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_gallery.*
+import ru.dmpolyakov.yandexgallery.FolderType
 import ru.dmpolyakov.yandexgallery.R
-import ru.dmpolyakov.yandexgallery.R.id.*
 import ru.dmpolyakov.yandexgallery.network.models.ImageFile
 import ru.dmpolyakov.yandexgallery.ui.base.BaseActivity
+import ru.dmpolyakov.yandexgallery.ui.utils.makePopupWindow
 import ru.dmpolyakov.yandexgallery.ui.viewver.ViewverActivity
-import java.util.*
 
 
 class GalleryActivity : BaseActivity(), GalleryView {
+
+    private var folderSelector: ListPopupWindow? = null
 
     override val presenter by lazy {
         GalleryPresenter()
@@ -36,7 +41,40 @@ class GalleryActivity : BaseActivity(), GalleryView {
             }
         })
 
+        selectedFolder.setOnClickListener {
+            presenter.onFolderSelector()
+        }
+
         presenter.attachView(this)
+    }
+
+    override fun showFolderSelector(@StringRes res: List<Int>) {
+        val data = ArrayList<String>()
+        for (@StringRes resId in res) {
+            data.add(getString(resId))
+        }
+
+        folderSelector = makePopupWindow(
+                data = data,
+                anchorView = selectedFolder,
+                onItemClickAction = Consumer { position ->
+                    selectedFolder.text = data[position]
+                    presenter.selectedFolder(when (position) {
+                        0 -> FolderType.Animals
+                        1 -> FolderType.Nature
+                        2 -> FolderType.Castles
+                        else -> null
+                    })
+                })
+        folderSelector?.show()
+    }
+
+    override fun updateFolderTitle(folderType: FolderType) {
+        selectedFolder.text = getString(when (folderType) {
+            FolderType.Animals -> R.string.funny_animals
+            FolderType.Nature -> R.string.amazing_nature
+            FolderType.Castles -> R.string.mysterious_castles
+        })
     }
 
     override fun onResume() {
@@ -81,5 +119,11 @@ class GalleryActivity : BaseActivity(), GalleryView {
         val intent = Intent(this, ViewverActivity::class.java)
         intent.putExtra("selected_item_index", selected)
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        folderSelector?.dismiss()
+        folderSelector = null
     }
 }
